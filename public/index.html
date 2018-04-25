@@ -16,6 +16,10 @@
             return false;
         }
 
+        socket.on('message', function(msg){
+            $('#messages').append($('<li class="list-group-item">').text(msg));
+        });
+
         function enterChat(){
             alert('under development');
         }
@@ -49,6 +53,14 @@
 </head>
 
 <body class="well">
+
+    <div class="row">
+        <div class="col-md-12">
+                <ul class="list-group" id="messages">
+                        
+                </ul>
+        </div>
+    </div>
 
     <div id="ContainerDiv">
         <div id="InnerContainer">

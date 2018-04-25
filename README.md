@@ -1,6 +1,6 @@
 # nodeChat
 
-Developing a console chat using TCP transport protocol and using Telnet.
+Developing a web chat using Socket.io
 
 ### Server
 
@@ -12,4 +12,4 @@ Run the server using
 
 Connect to the chat using
 
-```telnet 127.0.0.1 3000```
+```localhost:3000```

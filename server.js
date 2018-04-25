@@ -12,10 +12,12 @@ var io = require('socket.io')(server);
 
 io.on('connection', function(socket){ 
     console.log('connected'); 
-    socket.on('disconnect', function(){
+      
+     socket.on('disconnect', function(){
         console.log('user disconnected');
       });
       socket.on('message', function(msg){
+        io.emit('message', msg);
         console.log('message: ' + msg);
       });
 });
