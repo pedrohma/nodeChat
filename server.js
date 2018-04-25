@@ -1,56 +1,25 @@
-var net = require("net");
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+var path = require('path');
 
-var count = 0;
-var users = [];
+var urlencodedParser = bodyParser.urlencoded({limit: '50mb', extended: true })
 
-var server = net.createServer(function (conn) {
+app.use(express.static('./public'));
 
-    var nickname = '';
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-    conn.setEncoding("utf8");
-
-    conn.write(
-        "\n > welcome to \033[92mnode-chat\033[39m!" +
-        "\n > " + count + " other people are connected at this time." +
-        "\n > please write your name and press enter: "
-    );
-    count++;
-
-    function broadcast (msg, exceptMyself) {
-        for (var i in users) {
-          if (!exceptMyself || i != nickname) {
-            users[i].write(msg);
-          }
-      } }
-
-    conn.on("data", function (data) {
-        
-
-        data = data.replace("\r\n", "");
-
-        if (!nickname) {
-            if (users[data]) {
-                conn.write("\033[93m> nickname already in use. try again:\033[39m ");
-                return;
-            } else {
-                nickname = data;
-                users[nickname] = conn;
-                broadcast("\033[90m > " + nickname + " joined the room\033[39m\n");
-            }
-        }
-        else {
-            // otherwise you consider it a chat message
-            broadcast("\033[96m > " + nickname + ":\033[39m " + data + "\n", true);
-        }
-    });
-
-    conn.on("close", function () {
-        count--;
-        delete users[nickname];
-        broadcast("\033[90m > " + nickname + " left the room\033[39m\n");
-    });
+io.on('connection', function(socket){ 
+    console.log('connected'); 
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+      });
+      socket.on('message', function(msg){
+        console.log('message: ' + msg);
+      });
 });
 
-server.listen(3000, function () {
-    console.log("server listening on *:3000");
+var listener = server.listen(3000, function () {
+    console.log('Server listening on ' + listener.address().port);
 });
