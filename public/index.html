@@ -2,54 +2,12 @@
 
 <head>
     <link href="./assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="./assets/css/chat.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="./assets/bootstrap/js/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="./assets/bootstrap/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="./assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="./assets/socket.io.js"></script>
-    <script>
-        var socket = io();
-
-        function sendMessage(){
-            var msg = $("#msg").val();
-            socket.emit('message', msg);
-            $("#msg").val('');
-            return false;
-        }
-
-        socket.on('message', function(msg){
-            $('#messages').append($('<li class="list-group-item">').text(msg));
-        });
-
-        function enterChat(){
-            alert('under development');
-        }
-    </script>
-    <script>
-        // $(document).ready(function () {
-        //     $("#enterModal").modal({ backdrop: 'static', keyboard: false });
-        // });
-    </script>
-    <style>
-        #ContainerDiv {
-            margin: auto;
-            position: fixed;
-            margin: auto;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-        }
-
-        #InnerContainer {
-            width: 100%;
-        }
-
-        #TheBelowDiv {
-            font-size: 18pt;
-            font-family: Tahoma;
-            text-align: center;
-            color: white;
-        }
-    </style>
+    <script src="./assets/js/socket.io.js"></script>
+    <script src="./assets/js/chat.js"></script>
 </head>
 
 <body class="well">
@@ -57,7 +15,7 @@
     <div class="row">
         <div class="col-md-12">
                 <ul class="list-group" id="messages">
-                        
+                    
                 </ul>
         </div>
     </div>

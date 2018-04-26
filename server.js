@@ -11,14 +11,22 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 io.on('connection', function(socket){ 
-    console.log('connected'); 
+      var msg = {style: 'connected', message: 'user connected'};
+      io.emit('message', msg);
       
      socket.on('disconnect', function(){
+        var msg = {style: 'disconnect', message: 'user disconnect'};
+        io.emit('message', msg);
         console.log('user disconnected');
       });
+
       socket.on('message', function(msg){
-        io.emit('message', msg);
-        console.log('message: ' + msg);
+        if(msg != '' && msg != null){
+          var now = new Date().getHours() + ":" + new Date().getMinutes();
+          var message = {style: 'message', message: msg, date: now};
+          io.emit('message', message);
+          console.log('message: ' + msg);
+        }
       });
 });
 
