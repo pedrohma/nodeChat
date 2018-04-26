@@ -15,18 +15,18 @@
     <div class="row">
         <div class="col-md-12">
                 <ul class="list-group" id="messages">
-                    
                 </ul>
         </div>
     </div>
 
     <div id="ContainerDiv">
+        <p id="typing"></p>
         <div id="InnerContainer">
             <div id="TheBelowDiv">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Enter your message here..." aria-label="Recipient's username" aria-describedby="basic-addon2" id="msg">
+                            <input type="text" class="form-control" placeholder="Enter your message here..." aria-label="Recipient's username" aria-describedby="basic-addon2" id="msg" onkeypress="typeMsg();">
                             <div class="input-group-append">
                                     <a class="btn btn-primary" onclick="sendMessage();">Enter</a>
                             </div>
@@ -48,7 +48,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">@</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" id="username">
                     </div>
                 </div>
                 <div class="modal-footer">

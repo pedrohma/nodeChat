@@ -10,24 +10,40 @@ app.use(express.static('./public'));
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+var users = [];
+
+var user = "";
+
 io.on('connection', function(socket){ 
-      var msg = {style: 'connected', message: 'user connected'};
-      io.emit('message', msg);
+      var now = new Date().getHours() + ":" + new Date().getMinutes();
+
       
      socket.on('disconnect', function(){
-        var msg = {style: 'disconnect', message: 'user disconnect'};
-        io.emit('message', msg);
-        console.log('user disconnected');
+        var msg = {style: 'disconnect', message: 'user disconnected', date: now, from: null};
+        socket.broadcast.emit('message', msg);
+        console.log('user' + ' disconnected');
       });
 
-      socket.on('message', function(msg){
+      socket.on('message', function(msg, user){
+        console.log(user);
         if(msg != '' && msg != null){
-          var now = new Date().getHours() + ":" + new Date().getMinutes();
-          var message = {style: 'message', message: msg, date: now};
+          var message = {style: 'message', message: msg, date: now, from: user};
           io.emit('message', message);
-          console.log('message: ' + msg);
+          console.log('user ' + user + ' sent : ' + msg);
         }
       });
+
+      socket.on('checkUser', function (user){
+        users.push(user);
+        var msg = {style: 'connected', message: user + " connected", date: now, from: null};
+        socket.broadcast.emit('message', msg);
+      });
+
+      socket.on('typing', function(user){
+        var msg = {style: 'connected', message: user + " is typing a message...", date: now, from: null};
+        socket.broadcast.emit('typing', msg);
+    });
+
 });
 
 var listener = server.listen(3000, function () {
