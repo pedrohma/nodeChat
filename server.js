@@ -46,6 +46,6 @@ io.on('connection', function(socket){
 
 });
 
-var listener = server.listen(3000, function () {
+var listener = server.listen(process.env.PORT || 3000, function () {
     console.log('Server listening on ' + listener.address().port);
 });
