@@ -33,7 +33,12 @@ socket.on('message', function (msg) {
             break;
     }
     var appendStr = "";
-    appendStr += "<li class='" + styleClass + "'>";
+    if(from != null && from != user){
+        appendStr += "<li class='list-group-item list-group-item-primary'>";
+    }
+    else{
+        appendStr += "<li class='" + styleClass + "'>";
+    }
     appendStr += "<p>";
     if(from != null){
         appendStr += "<p><small><b>" + from + "</b></small></p>";
@@ -58,4 +63,11 @@ function enterChat() {
     user = username;
     socket.emit('checkUser', user);
     $("#enterModal").modal('hide');
+}
+
+function sendEnterMessage(e) {
+    if (e.keyCode == 13) {
+        document.getElementById("msgBtn").click();
+        return false;
+    }
 }
