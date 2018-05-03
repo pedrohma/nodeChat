@@ -2,8 +2,8 @@ var socket = io();
 
 var user = "";
 
-$(document).ready(function (){
-    $("#enterModal").modal({backdrop: 'static', keyboard: false});
+$(document).ready(function () {
+    $("#enterModal").modal({ backdrop: 'static', keyboard: false });
 });
 
 function sendMessage() {
@@ -18,43 +18,37 @@ socket.on('message', function (msg) {
     var message = msg.message;
     var time = msg.date;
     var from = msg.from;
-    var styleClass = "list-group-item";
+    var appendStr = "";
     switch (style) {
         case 'connected':
-            styleClass += " list-group-item-success";
+            appendStr += "<div class='alert alert-success' role='alert'>" + message + "</div>"
             break;
         case 'disconnect':
-            styleClass += " list-group-item-danger";
+            appendStr += "<div class='alert alert-danger' role='alert'>" + message + "</div>"
             break;
-        case 'message':
-            styleClass += " list-group-item-light";
+        case "message":
+            if (from != null && from != user) {
+                appendStr += "<li class='left clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right sender'><b>" + from + "</b></strong><small class='text-muted'><span class='glyphicon glyphicon-time'></span><i>" + time + "</i></small></p></div><p>" + message + "</p></div></li>";
+            }
+            else {
+                appendStr += "<li class='right clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right receiver'><b>" + from + "</b></strong><small class='text-muted'><span class='glyphicon glyphicon-time'></span><i>" + time + "</i></small></p></div><p>" + message + "</p></div></li>";
+            }
             break;
         default:
+
             break;
     }
-    var appendStr = "";
-    if(from != null && from != user){
-        appendStr += "<li class='list-group-item list-group-item-primary'>";
-    }
-    else{
-        appendStr += "<li class='" + styleClass + "'>";
-    }
-    appendStr += "<p>";
-    if(from != null){
-        appendStr += "<p><small><b>" + from + "</b></small></p>";
-    }
-    appendStr += "<span style='float: left;'>" + message + "</span>"; 
-    appendStr += "<span style='float: right;'><span class='badge badge-primary badge-pill'>" + time + "</span></span>";
-    appendStr += "</p></li>";
-    $('#messages').append($(appendStr));
+
+    $('.chat').append($(appendStr));
 });
 
-function typeMsg(){
+function typeMsg() {
     socket.emit('typing', user);
 }
 
-socket.on('typing', function(msg){
+socket.on('typing', function (msg) {
     var message = msg.message;
+    $("#typing").show();
     $("#typing").text(message).delay(2000).fadeOut();
 });
 
@@ -71,3 +65,4 @@ function sendEnterMessage(e) {
         return false;
     }
 }
+

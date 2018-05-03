@@ -7,28 +7,43 @@
     <script type="text/javascript" src="./assets/bootstrap/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="./assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="./assets/js/socket.io.js"></script>
+    <script src="./assets/js/socket.io.js.map"></script>
     <script src="./assets/js/chat.js"></script>
 </head>
 
 <body class="well">
 
-    <div class="row">
-        <div class="col-md-12">
-                <ul class="list-group" id="messages">
-                </ul>
-        </div>
-    </div>
+    <div class="container">
 
-    <div id="ContainerDiv">
-        <p id="typing"></p>
-        <div id="InnerContainer">
-            <div id="TheBelowDiv">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="chat">
+                    
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div style="height: 40px;"></div>
+        </div>
+
+        <div id="ContainerDiv">
+            <div id="InnerContainer">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Enter your message here..." aria-label="Recipient's username" aria-describedby="basic-addon2" id="msg" onkeypress="typeMsg(); return sendEnterMessage(event);">
-                            <div class="input-group-append">
+                        <p id="typing"></p>
+                    </div>
+                </div>
+                <div id="TheBelowDiv">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Enter your message here..." aria-label="Recipient's username" aria-describedby="basic-addon2"
+                                    id="msg" onkeypress="typeMsg(); return sendEnterMessage(event);">
+                                <div class="input-group-append">
                                     <a class="btn btn-primary" id="msgBtn" onclick="sendMessage();">Enter</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -36,6 +51,11 @@
             </div>
         </div>
     </div>
+
+
+
+
+
 
     <div class="modal" tabindex="-1" role="dialog" id="enterModal">
         <div class="modal-dialog" role="document">

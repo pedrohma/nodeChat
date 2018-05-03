@@ -16,8 +16,7 @@ var user = "";
 
 io.on('connection', function(socket){ 
       var now = new Date().getHours() + ":" + new Date().getMinutes();
-
-      
+  
      socket.on('disconnect', function(){
         var msg = {style: 'disconnect', message: 'user disconnected', date: now, from: null};
         socket.broadcast.emit('message', msg);
