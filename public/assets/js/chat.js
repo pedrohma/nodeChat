@@ -13,6 +13,7 @@ function sendMessage() {
     return false;
 }
 
+
 socket.on('message', function (msg) {
     var style = msg.style;
     var message = msg.message;
