@@ -29,10 +29,10 @@ socket.on('message', function (msg) {
             break;
         case "message":
             if (from != null && from != user) {
-                appendStr += "<li class='left clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right sender'><b>" + from + "</b></strong><small class='text-muted'><span class='glyphicon glyphicon-time'></span><i>" + time + "</i></small></p></div><p>" + message + "</p></div></li>";
+                appendStr += "<li class='right clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right receiver'><b>" + from + "</b></strong><small class='text-muted'><span class='glyphicon glyphicon-time'></span><i>" + time + "</i></small></p></div><p>" + message + "</p></div></li>";
             }
             else {
-                appendStr += "<li class='right clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right receiver'><b>" + from + "</b></strong><small class='text-muted'><span class='glyphicon glyphicon-time'></span><i>" + time + "</i></small></p></div><p>" + message + "</p></div></li>";
+                appendStr += "<li class='left clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right sender'><b>" + from + "</b></strong><small class='text-muted'><span class='glyphicon glyphicon-time'></span><i>" + time + "</i></small></p></div><p>" + message + "</p></div></li>";
             }
             break;
         default:

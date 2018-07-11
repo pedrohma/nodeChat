@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
+var db = require("./database.js");
 
 var urlencodedParser = bodyParser.urlencoded({limit: '50mb', extended: true })
 
@@ -20,15 +21,15 @@ io.on('connection', function(socket){
      socket.on('disconnect', function(){
         var msg = {style: 'disconnect', message: 'user disconnected', date: now, from: null};
         socket.broadcast.emit('message', msg);
-        console.log('user' + ' disconnected');
+        console.log('user disconnected');
       });
 
       socket.on('message', function(msg, user){
-        console.log(user);
         if(msg != '' && msg != null){
           var message = {style: 'message', message: msg, date: now, from: user};
           io.emit('message', message);
           console.log('user ' + user + ' sent : ' + msg);
+          db.newMsg(message);
         }
       });
 
@@ -36,6 +37,7 @@ io.on('connection', function(socket){
         users.push(user);
         var msg = {style: 'connected', message: user + " connected", date: now, from: null};
         socket.broadcast.emit('message', msg);
+        db.newUser(msg);
       });
 
       socket.on('typing', function(user){
