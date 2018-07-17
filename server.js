@@ -10,12 +10,15 @@ var urlencodedParser = bodyParser.urlencoded({limit: '50mb', extended: true })
 
 app.use(express.static('./public'));
 
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-
 var users = [];
 
 var user = "";
+
+var listener = app.listen(process.env.PORT || 3000, function () {
+  console.log('Server listening on ' + listener.address().port);
+});
+
+var io = require('socket.io').listen(listener);
 
 io.on('connection', function(socket){ 
   
@@ -47,9 +50,5 @@ io.on('connection', function(socket){
         socket.broadcast.emit('typing', msg);
     });
 
-});
-
-var listener = server.listen(process.env.PORT || 3000, function () {
-    console.log('Server listening on ' + listener.address().port);
 });
 
