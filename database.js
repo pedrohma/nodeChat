@@ -1,6 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 
-var url = "your_mongodb_cluster_url";
+var pass = "<YOUR_PASSWORD>";
+var url = "mongodb+srv://ken:" + pass + "@cluster0-lepee.mongodb.net/test";
 
 module.exports = {
 
