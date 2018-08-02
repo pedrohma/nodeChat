@@ -1,9 +1,8 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var path = require('path');
 var db = require("./database.js");
-var http = require('http');
+const server = require('http').createServer();
 var format = require('./util/dateFormat');
 
 var urlencodedParser = bodyParser.urlencoded({limit: '50mb', extended: true })
@@ -14,8 +13,6 @@ var users = [];
 
 var colors = ["#d77ee7", "#7ea0e7", "#7ee7bf", "#7ee795", "#c9ff00", "#ffc100", "#8245e3", "#8245e3", "#900303", "#f6b045"];
 
-var user = "";
-
 var listener = app.listen(process.env.PORT || 3000, function () {
   console.log('Server listening on ' + listener.address().port);
 });
@@ -23,21 +20,20 @@ var listener = app.listen(process.env.PORT || 3000, function () {
 var io = require('socket.io').listen(listener);
 
 io.on('connection', function(socket){ 
-  
-     socket.on('disconnect', function(){
-        var msg = {style: 'disconnect', message: 'user disconnected', date: format.data.formatAMPM(new Date()), from: null};
+    var userId;
+     
+    socket.on('disconnect', function(){
+        removeUser(userId);
+        var msg = {style: 'disconnect', message: userId + ' disconnected', date: format.data.formatAMPM(new Date()), from: null};
         socket.broadcast.emit('message', msg);
-        console.log('user disconnected');
       });
 
       socket.on('message', function(msg, user){
         if(msg != '' && msg != null){
+          userId = user;
           var user = getUser(user);
-          console.log('this is the user -> ' + user.name);
           var message = {style: 'message', message: msg, date: format.data.formatAMPM(new Date()), from: user};
-          // console.log(format.data.formatAMPM(new Date()));
           io.emit('message', message);
-          // console.log('user ' + user + ' sent : ' + msg);
           // db.newMsg(message);
         }
       });
@@ -45,15 +41,15 @@ io.on('connection', function(socket){
       socket.on('checkUser', function (user){
         var color = getColor();
         var user = {name: user, color: color};
+        userId = user.name;
         users.push(user);
-        console.log(user);
-        var msg = {style: 'connected', message: user.name + " connected", date: format.data.formatAMPM(new Date()), from: null, color: color};
+        var msg = {style: 'connected', message: user.name + " connected", date: format.data.formatAMPM(new Date()), from: null};
         socket.broadcast.emit('message', msg);
         // db.newUser(msg);
       });
 
       socket.on('typing', function(user){
-        var msg = {style: 'connected', message: user.name + " is typing a message...", date: format.data.formatAMPM(new Date()), from: null};
+        var msg = {style: 'connected', message: userId + " is typing a message...", date: format.data.formatAMPM(new Date()), from: null};
         socket.broadcast.emit('typing', msg);
     });
 
@@ -75,4 +71,11 @@ function getUser(name){
     }
   }
   return user;
+}
+
+function removeUser(name){
+  var user = getUser(name);
+  colors.push(user.color);
+  var index = users.indexOf(name);
+  users.splice(index, 1);
 }
