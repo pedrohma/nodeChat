@@ -18,7 +18,6 @@ socket.on('message', function (msg) {
     var style = msg.style;
     var message = msg.message;
     var time = msg.date;
-    var from = msg.from;
     var appendStr = "";
     switch (style) {
         case 'connected':
@@ -28,11 +27,13 @@ socket.on('message', function (msg) {
             appendStr += "<div class='alert alert-danger' role='alert'>" + message + "</div>"
             break;
         case "message":
+            var from = msg.from.name;
+            var color = msg.from.color;
             if (from != null && from != user) {
-                appendStr += "<li class='right clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right receiver'><b>" + from + "</b></strong><small class='text-muted'><span class='glyphicon glyphicon-time'></span><i>" + time + "</i></small></p></div><p>" + message + "</p></div></li>";
+                appendStr += "<li class='right clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + " '><b>" + from + "</b></strong><small class='text-muted'><span class='glyphicon glyphicon-time'></span><i>" + time + "</i></small></p></div><p>" + message + "</p></div></li>";
             }
             else {
-                appendStr += "<li class='left clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right sender'><b>" + from + "</b></strong><small class='text-muted'><span class='glyphicon glyphicon-time'></span><i>" + time + "</i></small></p></div><p>" + message + "</p></div></li>";
+                appendStr += "<li class='left clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + "><b>" + from + "</b></strong><small class='text-muted'><span class='glyphicon glyphicon-time'></span><i>" + time + "</i></small></p></div><p>" + message + "</p></div></li>";
             }
             break;
         default:
