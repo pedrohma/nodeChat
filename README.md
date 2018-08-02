@@ -13,3 +13,7 @@ Run the server using
 Connect to the chat using
 
 ```localhost:3000```
+
+### Application
+
+You can check the aplication here: https://node-chat-pedro.herokuapp.com/
