@@ -15,9 +15,9 @@ module.exports = function (listener) {
             if (addedUser) {
                 removeUser(userId);
             }
-
             var msg = { style: 'disconnect', message: userId + ' disconnected', date: format.data.formatAMPM(new Date()), from: null };
-            socket.broadcast.emit('message', msg);
+            socket.broadcast.emit('disconnect', msg);
+            io.emit('userlist', users);
         });
 
         socket.on('message', function (msg, user) {
@@ -32,27 +32,27 @@ module.exports = function (listener) {
 
         socket.on('checkUser', function (name) {
             if (addedUser) return;
-                if (name == undefined || name == ''){
-                    socket.emit('error', {
-                        err: 'You must enter a name, it cant be empty'
-                    });
-                };
-                socket.username = name;
-                var color = getColor();
-                var user = { name: name, color: color };
-                userId = name;
-                users.push(user);
-                var msg = { style: 'connected', message: name + " connected", date: format.data.formatAMPM(new Date()), from: null};
-                socket.broadcast.emit('message', msg);
-                socket.broadcast.emit('userlist', {
-                    users: users
+            if (name == undefined || name == '') {
+                socket.emit('error', {
+                    err: 'You must enter a name, it cant be empty'
                 });
-                addedUser = true;
-            // db.newUser(msg);
+            };
+            userId = name;
+            socket.username = name;
+            var user = { name: name, color: getColor() };
+            users.push(user);
+            var msg = { message: name + " connected!", users: users };
+            socket.broadcast.emit('checkUser', msg);
+            console.log('goes here');
+            addedUser = true;
+        });
+
+        socket.on('userlist', function () {
+            io.emit('userlist', users);
         });
 
         socket.on('typing', function (user) {
-            var msg = { style: 'connected', message: socket.username + " is typing a message...", date: format.data.formatAMPM(new Date()), from: null };
+            var msg = { style: 'connected', message: user + " is typing a message..." };
             socket.broadcast.emit('typing', msg);
         });
 

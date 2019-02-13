@@ -6,6 +6,31 @@ $(document).ready(function () {
    $("#enterModal").modal({ backdrop: 'static', keyboard: false });
 });
 
+function enterChat() {
+    var username = $("#username").val();
+    user = username;
+    socket.emit('checkUser', user);
+    socket.emit('userlist');
+    $("#enterModal").modal('hide');
+}
+
+socket.on('userlist', function (users){
+    populateOnlineList(users);
+});
+
+socket.on('checkUser', function (msg){
+    if(msg != undefined){
+        console.log(msg);
+        var appendStr = "<div class='alert alert-success' role='alert'>" + msg.message + "</div>";
+        var audio = new Audio('/assets/sound/new.mp3');
+        audio.play();
+        $('.chat').append($(appendStr));
+        populateOnlineList(msg.users);
+    }
+});
+
+
+
 function sendMessage() {
     var msg = $("#msg").val();
     socket.emit('message', msg, user);
@@ -13,7 +38,6 @@ function sendMessage() {
     $("#msg").focus();
     return false;
 }
-
 
 socket.on('message', function (msg) {
     var style = msg.style;
@@ -50,10 +74,6 @@ socket.on('message', function (msg) {
     $('.chat').append($(appendStr));
 });
 
-function typeMsg() {
-    socket.emit('typing', user);
-}
-
 socket.on('typing', function (msg) {
     var message = msg.message;
     $("#typing").show();
@@ -65,16 +85,12 @@ socket.on('error', function (msg) {
     $('.chat').append($(appendStr));
 });
 
-socket.on('userlist', function (users){
-    console.log(users);
-});
 
-function enterChat() {
-    var username = $("#username").val();
-    user = username;
-    socket.emit('checkUser', user);
-    $("#enterModal").modal('hide');
+function typeMsg(user) {
+    socket.emit('typing', user);
 }
+
+
 
 function sendEnterMessage(e) {
     if (e.keyCode == 13) {
@@ -83,3 +99,12 @@ function sendEnterMessage(e) {
     }
 }
 
+function populateOnlineList(users){
+    $('#onlineList').empty();
+    console.log(users);
+    var text =  "<li class='list-group-item'><b>Online Users</b></li>";
+    users.forEach(x => {
+        text += "<li class='list-group-item'><b><i class='fas fa-circle' style='color: #8af48c'></i> " + x.name + "</b></li>";
+    });
+    $('#onlineList').append($(text));
+}
