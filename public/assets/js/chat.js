@@ -92,8 +92,6 @@ function typeMsg(user) {
     socket.emit('typing', user);
 }
 
-
-
 function sendEnterMessage(e) {
     if (e.keyCode == 13) {
         document.getElementById("msgBtn").click();
@@ -109,4 +107,5 @@ function populateOnlineList(users){
         text += "<li class='list-group-item'><b><i class='fas fa-circle' style='color: #8af48c'></i> " + x.name + "</b></li>";
     });
     $('#onlineList').append($(text));
+    $('#mobileOnlineList').append($(text));
 }
