@@ -6,9 +6,6 @@
     width: 100%;
 }
 
-#InnerContainer {
-    width: 100%;
-}
 
 #TheBelowDiv {
     font-size: 18pt;
@@ -95,9 +92,15 @@
     font-size: 12pt;
     font-style: italic;
     margin-bottom: 0px;
+    color: black;
+    float: right;
 }
 
-li{
+.li > .chat {
     margin-top: 10px;
     bottom: 0;
+}
+
+#onlineList{
+    position: fixed;
 }

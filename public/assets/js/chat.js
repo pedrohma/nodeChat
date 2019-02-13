@@ -3,13 +3,14 @@ var socket = io();
 var user = "";
 
 $(document).ready(function () {
-    $("#enterModal").modal({ backdrop: 'static', keyboard: false });
+   $("#enterModal").modal({ backdrop: 'static', keyboard: false });
 });
 
 function sendMessage() {
     var msg = $("#msg").val();
     socket.emit('message', msg, user);
     $("#msg").val('');
+    $("#msg").focus();
     return false;
 }
 
@@ -57,6 +58,15 @@ socket.on('typing', function (msg) {
     var message = msg.message;
     $("#typing").show();
     $("#typing").text(message).delay(2000).fadeOut();
+});
+
+socket.on('error', function (msg) {
+    appendStr += "<div class='alert alert-danger' role='alert'>" + msg + "</div>";
+    $('.chat').append($(appendStr));
+});
+
+socket.on('userlist', function (users){
+    console.log(users);
 });
 
 function enterChat() {

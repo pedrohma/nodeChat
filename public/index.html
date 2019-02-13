@@ -8,60 +8,58 @@
     <meta name="author" content="Pedro Henrique Arthur">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="manifest" href="/manifest.webmanifest">
-    <link href="./assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- <link href="./assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />-->
     <link href="./assets/css/chat.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="./assets/bootstrap/js/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="./assets/bootstrap/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="./assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="./assets/js/socket.io.js"></script>
     <script src="./assets/js/chat.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA"
+        crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
 </head>
 
 <body class="well">
 
-    <div class="container">
+    <div class="container-fluid">
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-2">
+                <ul class="list-group list-group-flush" id="onlineList">
+                    <li class="list-group-item"><b>Online Users</b></li>
+                    <li class="list-group-item"><i class="fas fa-circle" style="color: #8af48c"></i> Cras justo odio</li>
+                </ul>
+            </div>
+            <div class="col-md-10">
                 <ul class="chat">
 
                 </ul>
-            </div>
 
-        </div>
+                <div id="ContainerDiv">
+                    <div id="TheBelowDiv">
+                        <div>
+                            <p id="typing"></p>
+                        </div>
 
-        <div class="row">
-            <div style="height: 40px;"></div>
-        </div>
-
-        <div id="ContainerDiv">
-            <div id="InnerContainer">
-                <div class="row">
-                    <div class="col-md-12">
-                        <p id="typing"></p>
-                    </div>
-                </div>
-                <div id="TheBelowDiv">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Enter your message here..." aria-label="Recipient's username" aria-describedby="basic-addon2"
-                                    id="msg" onkeypress="typeMsg(); return sendEnterMessage(event);">
-                                <div class="input-group-append">
-                                    <a class="btn btn-primary" id="msgBtn" onclick="sendMessage();">Enter</a>
-                                </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Enter your message here..." aria-label="Recipient's username"
+                                aria-describedby="basic-addon2" id="msg" onkeypress="typeMsg(); return sendEnterMessage(event);">
+                            <div class="input-group-append">
+                                <a class="btn btn-primary" id="msgBtn" onclick="sendMessage();">Send <i class="fas fa-sign-out-alt"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
+
     </div>
-
-
-
-
-
 
     <div class="modal" tabindex="-1" role="dialog" id="enterModal">
         <div class="modal-dialog" role="document">
@@ -74,11 +72,12 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">@</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" id="username">
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                            aria-describedby="basic-addon1" id="username">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-primary" onclick="enterChat();">Enter</a>
+                    <button class="btn btn-primary" onclick="enterChat();">Join <i class="fas fa-sign-in-alt"></i></button>
                 </div>
             </div>
         </div>
