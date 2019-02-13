@@ -29,6 +29,16 @@ socket.on('checkUser', function (msg){
     }
 });
 
+socket.on('disconnect', function (msg){
+    if(msg != undefined){
+        console.log(msg);
+        var appendStr = "<div class='alert alert-danger' role='alert'>" + msg.message + "</div>";
+        var audio = new Audio('/assets/sound/out.mp3');
+        audio.play();
+        $('.chat').append($(appendStr));
+        populateOnlineList(msg.users);
+    }
+});
 
 
 function sendMessage() {
@@ -46,23 +56,15 @@ socket.on('message', function (msg) {
     var appendStr = "";
     var audio;
     switch (style) {
-        case 'connected':
-            appendStr += "<div class='alert alert-success' role='alert'>" + message + "</div>"
-            audio =  new Audio('/assets/sound/new.mp3');
-            break;
-        case 'disconnect':
-            appendStr += "<div class='alert alert-danger' role='alert'>" + message + "</div>"
-            audio =  new Audio('/assets/sound/out.mp3');
-            break;
         case "message":
             var from = msg.from.name;
             var color = msg.from.color;
             if (from != null && from != user) {
-                appendStr += "<li class='right clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + " '><b>" + from + "</b></strong><small class='text-muted'><span class='glyphicon glyphicon-time'></span><i>" + time + "</i></small></p></div><p>" + message + "</p></div></li>";
+                appendStr += "<li class='right clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + " '><b>" + from + "</b></strong><small class='text-muted'> <i> " + time + " </i></small></p></div><p>" + message + "</p></div></li>";
                 audio =  new Audio('/assets/sound/stairs.mp3');
             }
             else {
-                appendStr += "<li class='left clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + "><b>" + from + "</b></strong><small class='text-muted'><span class='glyphicon glyphicon-time'></span><i>" + time + "</i></small></p></div><p>" + message + "</p></div></li>";
+                appendStr += "<li class='left clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + "><b>" + from + "</b></strong><small class='text-muted'><i><span style='color:" + color + "'>" + from + " (Yourself) </span> - " + time + "</i> <span class='far fa-clock'></span></small></p></div><p>" + message + "</p></div></li>";
                 audio =  new Audio('/assets/sound/stairs.mp3');
             }
             break;
