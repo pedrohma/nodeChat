@@ -47,6 +47,7 @@ module.exports = function (listener) {
         });
 
         socket.on('typing', function (user) {
+            console.log(user);
             var msg = { style: 'connected', message: user + " is typing a message..." };
             socket.broadcast.emit('typing', msg);
         });
