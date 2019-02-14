@@ -88,7 +88,7 @@ socket.on('error', function (msg) {
 });
 
 
-function typeMsg(user) {
+function typeMsg() {
     socket.emit('typing', user);
 }
 
