@@ -30,15 +30,19 @@
 
         <div class="row">
             <div class="col-md-3">
-                <ul class="list-group" id="onlineList">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list-group" id="onlineList">
 
-                </ul>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
             <div class="col-md-9">
                 <ul class="chat">
 
                 </ul>
-
                 <div id="ContainerDiv">
                     <div id="TheBelowDiv">
                         <div>
@@ -46,8 +50,7 @@
                         </div>
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Enter your message here..."
-                                aria-label="Recipient's usgithub.comrname" aria-describedby="basic-addon2" id="msg"
+                            <input type="text" class="form-control" placeholder="Enter your message here..." id="msg"
                                 onkeypress="typeMsg(); return sendEnterMessage(event);">
                             <div class="input-group-append">
                                 <a class="btn btn-primary" id="msgBtn" onclick="sendMessage();">Send <i
@@ -78,8 +81,11 @@
                     </div>
 
                     <div class="alert alert-danger" role="alert" id="loginErrorDiv">
-                            <p id="loginErrorMsg"></p>
+                        <div style="display: table;">
+                            <span><i class="fas fa-exclamation-triangle"></i></span>
+                            <span id="loginErrorMsg"></span>
                         </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" onclick="enterChat();">Join <i

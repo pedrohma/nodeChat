@@ -29,8 +29,8 @@ socket.on('joinsuccess', function (msg){
 });
 
 socket.on('disconnect', function (msg){
-    if(msg != undefined){
-        console.log(msg);
+    if(msg != undefined && msg.message != undefined){
+        // console.log(msg);
         var appendStr = "<div class='alert alert-danger' role='alert'>" + msg.message + "</div>";
         var audio = new Audio('/assets/sound/out.mp3');
         audio.play();

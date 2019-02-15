@@ -101,14 +101,18 @@
     bottom: 0;
 }
 
-#onlineList{
-    position: fixed;
-    height: auto;
-}
-
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 800px) {
     #onlineList{
         visibility: hidden;
     }
+}
+
+#loginErrorMsg{
+    float: right; 
+    margin-left: 10px;
+}
+
+.fa-exclamation-triangle{
+    float: left;
 }

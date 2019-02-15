@@ -11,9 +11,9 @@ module.exports = function (listener) {
         socket.on('disconnect', function () {
             if (addedUser) {
                 userMethods.RemoveUser(socket.username);
+                var msg = { style: 'disconnect', message: socket.username + ' disconnected!', users: userMethods.GetUsers() };
+                io.emit('disconnect', msg);
             }
-            var msg = { style: 'disconnect', message: socket.username + ' disconnected!', users: userMethods.GetUsers() };
-            io.emit('disconnect', msg);
         });
 
         socket.on('message', function (msg, user) {
