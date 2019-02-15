@@ -4,23 +4,22 @@ var user = "";
 
 $(document).ready(function () {
    $("#enterModal").modal({ backdrop: 'static', keyboard: false });
+   $("#loginErrorDiv").hide();
 });
 
 function enterChat() {
-    var username = $("#username").val();
-    user = username;
+    user = $("#username").val();
     socket.emit('checkUser', user);
-    socket.emit('userlist');
-    $("#enterModal").modal('hide');
 }
 
 socket.on('userlist', function (users){
     populateOnlineList(users);
 });
 
-socket.on('checkUser', function (msg){
+socket.on('joinsuccess', function (msg){
     if(msg != undefined){
-        console.log(msg);
+        $("#enterModal").modal('hide');
+        socket.emit('userlist');
         var appendStr = "<div class='alert alert-success' role='alert'>" + msg.message + "</div>";
         var audio = new Audio('/assets/sound/new.mp3');
         audio.play();
@@ -77,14 +76,15 @@ socket.on('message', function (msg) {
 });
 
 socket.on('typing', function (msg) {
-    var message = msg.message;
     $("#typing").show();
-    $("#typing").text(message).delay(2000).fadeOut();
+    $("#typing").text(msg.message).delay(2000).fadeOut();
 });
 
-socket.on('error', function (msg) {
-    appendStr += "<div class='alert alert-danger' role='alert'>" + msg + "</div>";
-    $('.chat').append($(appendStr));
+socket.on('joinerror', function (msg) {
+    $("#loginErrorMsg").empty();
+    $("#loginErrorDiv").show();
+    $("#loginErrorMsg").text(msg.err);
+    $("#loginErrorDiv").delay(2000).fadeOut();
 });
 
 
@@ -100,12 +100,12 @@ function sendEnterMessage(e) {
 }
 
 function populateOnlineList(users){
-    $('#onlineList').empty();
-    console.log(users);
-    var text =  "<li class='list-group-item'><b>Online Users</b></li>";
-    users.forEach(x => {
-        text += "<li class='list-group-item'><b><i class='fas fa-circle' style='color: #8af48c'></i> " + x.name + "</b></li>";
-    });
-    $('#onlineList').append($(text));
-    $('#mobileOnlineList').append($(text));
+    if(users != undefined && users.length > 0){
+        $('#onlineList').empty();
+        var text =  "<li class='list-group-item'><b>Online Users</b></li>";
+        users.forEach(x => {
+            text += "<li class='list-group-item'><b><i class='fas fa-circle' style='color: #8af48c'></i> " + x.name + "</b></li>";
+        });
+        $('#onlineList').append($(text));
+    }
 }
