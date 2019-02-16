@@ -38,7 +38,7 @@ module.exports = function (listener) {
                     var user = { name: name, color: userMethods.GetColor(), id: socket.id };
                     userMethods.AddUser(user); 
                     var msg = { message: name + " connected!", users: userMethods.GetUsers() };
-                    socket.emit('joinsuccess', msg);
+                    io.emit('joinsuccess', msg);
                     addedUser = true;
                 }
                 else{
