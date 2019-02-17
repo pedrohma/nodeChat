@@ -12,6 +12,20 @@ function GetColor() {
     return color;
 }
 
+function UsernameIsAvailable(name){
+    var user = null;
+
+    if (name != undefined) {
+        for (i = 0; i < users.length; i++) {
+            if (users[i].name == name) {
+                user = users[i];
+            }
+        }
+    }
+
+    return user == null;
+}
+
 function GetUser(name) {
     var user = null;
 
@@ -52,3 +66,4 @@ module.exports.GetUser = GetUser;
 module.exports.RemoveUser = RemoveUser;
 module.exports.GetUsers = GetUsers;
 module.exports.AddUser = AddUser;
+module.exports.UsernameIsAvailable = UsernameIsAvailable;

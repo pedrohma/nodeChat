@@ -23,6 +23,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    margin-bottom: 40px;
 }
 
 .chat li
@@ -96,19 +97,55 @@
     float: right;
 }
 
-.li > .chat {
+.chat > .li  {
     margin-top: 10px;
     bottom: 0;
 }
 
-#onlineList{
-    position: fixed;
-    height: auto;
-}
-
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 800px) {
-    #onlineList{
-        visibility: hidden;
+    #onlineList > li.obc{
+        display: none;
     }
+    #onlineList{
+        margin-bottom: 10px;
+    }
+
+    #titleAnchor:hover{
+        text-decoration: underline;
+    }
+    
+    #titleAnchor{
+        color: #33ccff; 
+        cursor: pointer;
+    }
+    .displ{
+        display: table;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    #titleAnchor:hover{
+        text-decoration: none;
+    }
+    
+    #titleAnchor{
+        color: black;
+        cursor: auto;
+    }
+}
+
+
+
+#loginErrorMsg{
+    float: right; 
+    margin-left: 10px;
+}
+
+.fa-exclamation-triangle{
+    float: left;
+}
+
+#titleList{
+    margin-left: 10px;
 }
