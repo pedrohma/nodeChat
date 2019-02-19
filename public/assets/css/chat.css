@@ -3,8 +3,9 @@ ul {
     word-wrap: break-word;
 }
 
-#msgGrp{
-    position: absolute;
+#chatArea{
+    height: 100%;
+  padding-bottom: 60px;
 }
 
 #ContainerDiv {
@@ -144,9 +145,13 @@ li:last-child {
         font-size: 10pt;
         margin-top: 20px;
         margin-bottom: 20px;
+        position: static;
     }
     .chat li:last-child {
         margin-bottom: 50px;
+    }
+    #msgGrp{
+        position: absolute;
     }
 }
 
