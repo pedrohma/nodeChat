@@ -26,30 +26,30 @@
 
 <body class="well">
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="overflow-y: auto;">
 
         <div class="row">
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-md-12">
-                        <ul class="list-group text-center" id="onlineList">
+                        <!-- <div class="sticky-top"> -->
+                                <ul class="list-group text-center" id="onlineList">
 
-                        </ul>
+                                    </ul>
+                        <!-- </div> -->
                     </div>
                 </div>
 
             </div>
             <div class="col-md-9">
                 <ul class="chat">
-
                 </ul>
                 <div id="ContainerDiv">
                     <div id="TheBelowDiv">
                         <div>
                             <p id="typing"></p>
                         </div>
-
-                        <div class="input-group">
+                        <div class="input-group" id="msgGrp">
                             <input type="text" class="form-control" placeholder="Enter your message here..." id="msg"
                                 onkeypress="typeMsg(); return sendEnterMessage(event);">
                             <div class="input-group-append">

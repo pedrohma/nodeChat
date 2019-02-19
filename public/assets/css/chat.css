@@ -1,3 +1,12 @@
+ul {
+    list-style: none;
+    word-wrap: break-word;
+}
+
+#msgGrp{
+    position: absolute;
+}
+
 #ContainerDiv {
     margin: auto;
     position: fixed;
@@ -5,7 +14,6 @@
     bottom: 0;
     width: 100%;
 }
-
 
 #TheBelowDiv {
     font-size: 18pt;
@@ -20,14 +28,20 @@
 
 .chat
 {
-    list-style: none;
+    height: 100%;
+    padding: 10px 20px 10px 20px;
+    overflow-y: auto;
     margin: 0;
-    padding: 0;
-    margin-bottom: 40px;
 }
 
-.chat li
+.chat li.left 
 {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.right{
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-bottom: 1px dotted #B3A9A9;
@@ -35,13 +49,12 @@
 
 .chat li.left .chat-body
 {
-    margin-left: 30px;
+    margin-right: 20px;
     text-align: right;
 }
 
 .chat li.right .chat-body
 {
-    margin-right: 30px;
     text-align: left;
 }
 
@@ -52,7 +65,6 @@
 .receiver{
     color: #4383cc;
 }
-
 
 .chat li .chat-body p
 {
@@ -92,7 +104,8 @@
 #typing{
     font-size: 12pt;
     font-style: italic;
-    margin-bottom: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     color: black;
     float: right;
 }
@@ -102,6 +115,10 @@
     bottom: 0;
 }
 
+li:last-child {
+    margin-bottom: 50px;
+   }
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 800px) {
     #onlineList > li.obc{
@@ -109,6 +126,7 @@
     }
     #onlineList{
         margin-bottom: 10px;
+        position: sticky;
     }
 
     #titleAnchor:hover{
@@ -121,6 +139,14 @@
     }
     .displ{
         display: table;
+    }
+    #typing{
+        font-size: 10pt;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .chat li:last-child {
+        margin-bottom: 50px;
     }
 }
 
@@ -135,8 +161,6 @@
     }
 }
 
-
-
 #loginErrorMsg{
     float: right; 
     margin-left: 10px;
@@ -149,3 +173,4 @@
 #titleList{
     margin-left: 10px;
 }
+
