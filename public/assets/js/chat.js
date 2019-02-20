@@ -20,7 +20,7 @@ socket.on('joinsuccess', function (msg) {
     if (msg != undefined) {
         $("#enterModal").modal('hide');
         socket.emit('userlist');
-        var appendStr = "<div class='alert alert-success' role='alert'>" + msg.message + "</div>";
+        var appendStr = "<li class='alert alert-success' role='alert'>" + msg.message + "</li>";
         var audio = new Audio('/assets/sound/new.mp3');
         audio.play();
         $('.chat').append($(appendStr));
@@ -31,7 +31,7 @@ socket.on('joinsuccess', function (msg) {
 socket.on('disconnect', function (msg) {
     if (msg != undefined && msg.message != undefined) {
         // console.log(msg);
-        var appendStr = "<div class='alert alert-danger' role='alert'>" + msg.message + "</div>";
+        var appendStr = "<li class='alert alert-danger' role='alert'>" + msg.message + "</li>";
         var audio = new Audio('/assets/sound/out.mp3');
         audio.play();
         $('.chat').append($(appendStr));
@@ -54,16 +54,18 @@ socket.on('message', function (msg) {
     var time = msg.date;
     var appendStr = "";
     var audio;
+    var unique = "" + new Date().getMilliseconds();
+    unique += "_" + new Date().getMilliseconds();
     switch (style) {
         case "message":
             var from = msg.from.name;
             var color = msg.from.color;
             if (from != null && from != user) {
-                appendStr += "<li class='right clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + " '><b>" + from + "</b></strong><small class='text-muted'> <i> " + time + " </i></small></p></div><p>" + message + "</p></div></li>";
+                appendStr += "<li class='right clearfix' id='" + unique + "'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + " '><b>" + from + "</b></strong><small class='text-muted'> <i> " + time + " </i></small></p></div><p>" + message + "</p></div></li>";
                 audio = new Audio('/assets/sound/stairs.mp3');
             }
             else {
-                appendStr += "<li class='left clearfix'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + "><b>" + from + "</b></strong><small class='text-muted'><i><span style='color:" + color + "'>" + from + " (Yourself) </span> - " + time + "</i> <span class='far fa-clock'></span></small></p></div><p>" + message + "</p></div></li>";
+                appendStr += "<li class='left clearfix' id='" + unique + "'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + "><b>" + from + "</b></strong><small class='text-muted'><i><span style='color:" + color + "'>" + from + " (Yourself) </span> - " + time + "</i></small></p></div><p>" + message + "</p></div></li>";
                 audio = new Audio('/assets/sound/stairs.mp3');
             }
             break;
@@ -72,7 +74,13 @@ socket.on('message', function (msg) {
     }
 
     audio.play();
-    $('.chat').append($(appendStr));
+    // var last = $('.chat').append($(appendStr));
+    $(appendStr).appendTo(".chat");
+    // console.log(unique);
+    // $("#" + unique).focus();
+    $('.chat')[0].scrollTop = $('.chat')[0].scrollHeight;
+    // $('.chat').animate({scrollTop: last.offset().top }, '500', 'swing', function() {});
+    
 });
 
 socket.on('typing', function (msg) {
@@ -120,9 +128,9 @@ function showList() {
     for (prop in elementStyle) {
         if (elementStyle.hasOwnProperty(prop)) {
             if (prop == 'color') {
-                if(computedStyle[prop] == 'rgb(51, 204, 255)'){
+                if (computedStyle[prop] == 'rgb(51, 204, 255)') {
                     $("#mobListMod").modal();
-                } 
+                }
             }
         }
     }
