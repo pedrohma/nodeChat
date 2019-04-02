@@ -61,11 +61,11 @@ socket.on('message', function (msg) {
             var from = msg.from.name;
             var color = msg.from.color;
             if (from != null && from != user) {
-                appendStr += "<li class='right clearfix' id='" + unique + "'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + " '><b>" + from + "</b></strong><small class='text-muted'> <i> " + time + " </i></small></p></div><p>" + message + "</p></div></li>";
+                appendStr += "<li class='right clearfix' id='" + unique + "'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + " '><b>" + from + "</b></strong><small class='text-muted'> <i><span class='time-chat'>(" + time + ")</span></i></small></p></div><p>" + message + "</p></div></li>";
                 audio = new Audio('/assets/sound/stairs.mp3');
             }
             else {
-                appendStr += "<li class='left clearfix' id='" + unique + "'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + "><b>" + from + "</b></strong><small class='text-muted'><i><span style='color:" + color + "'>" + from + " (Yourself) </span> - " + time + "</i></small></p></div><p>" + message + "</p></div></li>";
+                appendStr += "<li class='left clearfix' id='" + unique + "'><div class='chat-body clearfix'><div class='header'><p><strong class='pull-right' style='color: " + color + "><b>" + from + "</b></strong><small class='text-muted'><i><span style='color:" + color + "'>" + from + " </span><span class='time-chat'>(" + time + ")</span></i></small></p></div><p>" + message + "</p></div></li>";
                 audio = new Audio('/assets/sound/stairs.mp3');
             }
             break;
